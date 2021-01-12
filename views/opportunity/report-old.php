@@ -74,6 +74,7 @@ foreach ($metas as $metadata) {
 <table>
     <thead>
         <tr>
+            <th> <?php i::_e("ID de Registro") ?> </th>
             <th> <?php i::_e("Número") ?> </th>
 
             <?php showIfField($entity->projectName, i::__("Nome do projeto")); ?>
@@ -110,6 +111,7 @@ foreach ($metas as $metadata) {
     <tbody>
         <?php foreach ($entity->sentRegistrations as $r) : ?>
             <tr>
+                <td><?php echo $r->id; ?></td>
                 <td><a href="<?php echo $r->singleUrl; ?>" target="_blank"><?php echo $r->number; ?></a></td>
                 <?php if ($entity->projectName) : ?>
                     <td><?php echo $r->projectName ?></td>
