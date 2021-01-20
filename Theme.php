@@ -1,4 +1,5 @@
 <?php
+
 namespace Ceara;
 
 use MapasCulturais\App;
@@ -1511,11 +1512,9 @@ class Theme extends BaseV1\Theme
                     $relation = $owner->createAgentRelation($agent, 'group-admin', true, false);
                     $relation->save(true);
                 }
-
             }
 
             $app->enableAccessControl();
-
         });
 
         $app->hook('<<GET|POST>>(registration.remove)', function () use ($app) {
@@ -1548,14 +1547,12 @@ class Theme extends BaseV1\Theme
                 $result = $statement->fetchAll();
                 $result_type = "success";
                 $result = "OK";
-
             } catch (\Exception $e) {
                 $result = $e->getMessage();
                 $result_type = "error";
             }
 
             $this->json(array($result_type => $result));
-
         });
 
         $app->hook('template(opportunity.<<create|edit|single>>.registration-list-header):end', function () use ($app) {
@@ -1570,41 +1567,41 @@ class Theme extends BaseV1\Theme
             }
         });
 
-        $app->hook('template.opportunity.single.header.registration-item', function($registrationId) use($app) {
+        $app->hook('template.opportunity.single.header.registration-item', function ($registrationId) use ($app) {
             if ($app->user->is('admin')) {
-                echo '<button class="btn btn-danger" data-id='.$registrationId.' onclick=\'if (confirm("Tem certeza que você deseja apagar a inscrição n. on-" + this.dataset.id + " ?")) {$.ajax({url: MapasCulturais.baseURL + "/registration/remove/registration_id:"+ this.dataset.id , success: function(result){ if(result.success) {MapasCulturais.Messages.success("Inscrição excluida com sucesso!");} else{ MapasCulturais.Messages.error(result.error);} }});}\'> Apagar </button>';
+                echo '<button class="btn btn-danger" data-id=' . $registrationId . ' onclick=\'if (confirm("Tem certeza que você deseja apagar a inscrição n. on-" + this.dataset.id + " ?")) {$.ajax({url: MapasCulturais.baseURL + "/registration/remove/registration_id:"+ this.dataset.id , success: function(result){ if(result.success) {MapasCulturais.Messages.success("Inscrição excluida com sucesso!");} else{ MapasCulturais.Messages.error(result.error);} }});}\'> Apagar </button>';
             }
         });
-        
+
         /* Adicionando novos campos na entidade entity revision agent */
         $app->hook('template(entityrevision.history.tab-about-service):end', function () {
             $this->part('news-fields-agent-revision', [
                 'entityRevision' => $this->data->entityRevision,
             ]);
         });
-       
+
         /* Adicionando novos campos na entidade entity revision agent */
         $app->hook('template(entityrevision.history.tab-about-service):end', function () {
             $this->part('news-fields-agent-revision', [
                 'entityRevision' => $this->data->entityRevision,
             ]);
         });
-      
+
         $app->hook('template(opportunity.single.header-inscritos):end', function () use ($app) {
             $opportunity = $this->controller->requestedEntity;
             $this->part('report/opportunity-report-buttons', ['entity' => $opportunity]);
         });
-        
+
         //relatórios de inscritos botão antigo 
-        $app->hook("<<GET|POST>>(opportunity.reportOld)", function()use ($app){
+        $app->hook("<<GET|POST>>(opportunity.reportOld)", function () use ($app) {
             //return var_dump("ola");
             $this->requireAuthentication();
             // //$app = App::i();
-            
+
 
             $entity = $app->repo("Opportunity")->find($this->urlData['id']);
 
-            if(!$entity){
+            if (!$entity) {
                 $app->pass();
             }
 
@@ -1614,20 +1611,20 @@ class Theme extends BaseV1\Theme
 
             $filename = sprintf(\MapasCulturais\i::__("oportunidade-%s--inscricoes"), $entity->id);
 
-           
+
             $response = $app->response();
             $response['Content-Encoding'] = 'UTF-8';
             $response['Content-Type'] = 'application/force-download';
-            $response['Content-Disposition'] ='attachment; filename=' . $filename . '.xls';
-            $response['Pragma'] ='no-cache';
+            $response['Content-Disposition'] = 'attachment; filename=' . $filename . '.xls';
+            $response['Pragma'] = 'no-cache';
 
             $app->contentType('application/vnd.ms-excel; charset=UTF-8');
-            
-    
+
+
             ob_start();
             $this->partial("report-old", ['entity' => $entity]);
             $output = ob_get_clean();
-            echo mb_convert_encoding($output,"HTML-ENTITIES","UTF-8");
+            echo mb_convert_encoding($output, "HTML-ENTITIES", "UTF-8");
         });
 
 
@@ -1666,19 +1663,19 @@ class Theme extends BaseV1\Theme
                     return $motivos;
                 });
                 $categoria = $registration->category;
-                $agentRelations = $app->repo('RegistrationAgentRelation')->findBy(['owner'=>$registration]);
-                
+                $agentRelations = $app->repo('RegistrationAgentRelation')->findBy(['owner' => $registration]);
+
                 $coletivo = null;
-                
-                if($agentRelations) {
-                   $coletivo = $agentRelations[0]->agent->nomeCompleto;
+
+                if ($agentRelations) {
+                    $coletivo = $agentRelations[0]->agent->nomeCompleto;
                 }
 
                 $proponente = $registration->owner->nomeCompleto;
-                if (strpos($categoria,'JURÍDICA') && $coletivo !== null) {
-                   $proponente = $coletivo;
-                } 
-                
+                if (strpos($categoria, 'JURÍDICA') && $coletivo !== null) {
+                    $proponente = $coletivo;
+                }
+
                 $json_array[] = [
                     'n_inscricao' => $registration->number,
                     'projeto' => $projectName,
@@ -1709,79 +1706,78 @@ class Theme extends BaseV1\Theme
         $app->hook("POST(aldirblanc.status)", function () use ($app) {
             $this->requireAuthentication();
             $app = App::i();
-    
+
             $type_bank_account = $app->repo('RegistrationMeta')->findOneBy([
                 'key' => 'field_6494',
                 'owner' => $this->urlData['registration_id']
             ]); // Tipo de conta bancária
-    
+
             $bank = $app->repo('RegistrationMeta')->findOneBy([
                 'key' => 'field_6469',
                 'owner' => $this->urlData['registration_id']
             ]);
-    
+
             $agency = $app->repo('RegistrationMeta')->findOneBy([
                 'key' => 'field_6468',
                 'owner' => $this->urlData['registration_id']
             ]);
-    
+
             $account = $app->repo('RegistrationMeta')->findOneBy([
                 'key' => 'field_6464',
                 'owner' => $this->urlData['registration_id']
             ]);
-    
+
             $bank->value = $this->postData['banks'];
             $type_bank_account->value = $this->postData['type_bank_accounts'];
-            $agency->value = $this->postData["agency_digit"] 
+            $agency->value = $this->postData["agency_digit"]
                 ? $this->postData["agency_number"] . "-" . $this->postData["agency_digit"]
                 : $this->postData["agency_number"];
-            $account->value = $this->postData["account_digit"] 
+            $account->value = $this->postData["account_digit"]
                 ? $this->postData["account_number"] . "-" . $this->postData["account_digit"]
                 : $this->postData["account_number"];
-    
+
             $app->em->flush();
-    
+
             $app->redirect($this->createUrl('status', [$this->urlData['registration_id']]));
         });
 
-        $app->hook('template(<<agent|space|event|project>>.<<single>>.main-content):end', function() use ($app) {
+        $app->hook('template(<<agent|space|event|project>>.<<single>>.main-content):end', function () use ($app) {
             // É possível acessar a propriedade config pelo o $app;
-            
+
             $params = [];
-    
-            if(array_key_exists('compliant',$app->_config)) {
+
+            if (array_key_exists('compliant', $app->_config)) {
                 $params['compliant'] = $app->_config['compliant']; // Denuncia
             }
-    
-            if(array_key_exists('suggestion', $app->_config)) {
+
+            if (array_key_exists('suggestion', $app->_config)) {
                 $params['suggestion'] = $app->_config['suggestion']; // Contato
             }
-            
-            if(array_key_exists('google-recaptcha-sitekey',$app->_config)) {
+
+            if (array_key_exists('google-recaptcha-sitekey', $app->_config)) {
                 $params['googleRecaptchaSiteKey'] = $app->_config['google-recaptcha-sitekey'];
             }
-            
+
             $this->part('compliant_suggestion_ceara.php', $params);
         });
 
         $app->hook('template(opportunity.single.header-inscritos):end', function () use ($app) {
             $opportunity = $this->controller->requestedEntity;
-            $inciso1_opportunity_id = $app->_config['plugins']['AldirBlanc']['config']['inciso1_opportunity_id'];                         
-           
-            if ($opportunity->id == $inciso1_opportunity_id) {
-               $url = $app->createUrl('aldirblanc', 'inciso1ProcessResult');
-               echo '<a class="btn btn-default" href="'.$url.'"> Processar Resultado das Avaliacoes Inciso 1 </a>';
-            }            
-       });
+            $inciso1_opportunity_id = $app->_config['plugins']['AldirBlanc']['config']['inciso1_opportunity_id'];
 
-       $app->hook('template(aldirblanc.status.reason-failure):begin', function ($params) use ($app) {
-        
+            if ($opportunity->id == $inciso1_opportunity_id) {
+                $url = $app->createUrl('aldirblanc', 'inciso1ProcessResult');
+                echo '<a class="btn btn-default" href="' . $url . '"> Processar Resultado das Avaliacoes Inciso 1 </a>';
+            }
+        });
+
+        $app->hook('template(aldirblanc.status.reason-failure):begin', function ($params) use ($app) {
+
             $evaluations = $app->repo('RegistrationEvaluation')->findByRegistrationAndUsersAndStatus($params['entity']);
             $params['evaluations'] = $evaluations;
 
             $this->part('reason-failure', $params);
-
-       });
+        });
     }
     /**
      *

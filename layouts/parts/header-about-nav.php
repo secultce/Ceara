@@ -1,14 +1,15 @@
 <nav id="main-nav" class="clearfix">
     <ul class="menu entities-menu clearfix">
-        <li id="entities-menu-event" ng-class="{'active':data.global.filterEntity === 'event',
-                           'current-entity-parent':'panel' == 'event'}" ng-click="tabClick('event')">
-            <a href="http://localhost:8080/print">
-                <div class="icon icon-event"></div>
+        <li>
+            <a href="#">
+                <script src="<?php $this->asset('js/tawkto.js'); ?>"></script>
+                <div class="icon icon-help"></div>
                 <div class="menu-item-label">Suporte</div>
             </a>
         </li>
     </ul>
 </nav>
+
 
 
 <nav id="about-nav" class="alignright clearfix">
