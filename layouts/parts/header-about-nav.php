@@ -1,4 +1,4 @@
-<nav id="main-nav" class="clearfix">
+<!-- <nav id="main-nav" class="clearfix">
     <ul class="menu entities-menu clearfix">
         <li>
             <a href="#">
@@ -8,7 +8,7 @@
             </a>
         </li>
     </ul>
-</nav>
+</nav> -->
 
 
 

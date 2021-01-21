@@ -10,17 +10,14 @@ $title = isset($entity) ? $this->getTitle($entity) : $this->getTitle()
     <title><?php echo $title == $site_name ? $title : "{$site_name} - {$title}"; ?></title>
     <link rel="profile" href="http://gmpg.org/xfn/11" />
     <link rel="shortcut icon" href="<?php $this->asset('img/favicon.ico') ?>" />
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css" />
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     <?php $this->head(isset($entity) ? $entity : null); ?>
     <!--[if lt IE 9]>
         <script src="<?php $this->asset('js/html5.js'); ?>" type="text/javascript"></script>
         <![endif]-->
-
 </head>
 
 <body <?php $this->bodyProperties() ?>>
+
     <?php $this->bodyBegin(); ?>
     <header id="main-header" class="clearfix" ng-class="{'sombra':data.global.viewMode !== 'list'}">
         <?php $this->part('header-logo') ?>
@@ -28,7 +25,6 @@ $title = isset($entity) ? $this->getTitle($entity) : $this->getTitle()
         <?php $this->part('header-main-nav') ?>
         <div>
             <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-
 
             <a class="elementor-icon elementor-social-icon elementor-social-icon-font elementor-repeater-item-802b411" target="_blank">
                 <span class="elementor-screen-only"></span>
