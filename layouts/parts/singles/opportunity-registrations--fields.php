@@ -47,7 +47,7 @@ $app->applyHookBoundTo($this, 'opportunity.blockedFields', [$entity]);
             </label>
             <label>
                 <?php i::_e('Item do Edital') ?><br>
-                <textarea ng-model="data.newFieldConfiguration.description" placeholder="<?php i::esc_attr_e("Item do Edital"); ?>" /></textarea>
+                <textarea ng-model="data.newFieldConfiguration.fieldOptions" placeholder="<?php i::esc_attr_e("Item do Edital"); ?>" /></textarea>
             </label>
             {{ (field = data.newFieldConfiguration) && false ? '' : ''}}
             <?php
@@ -116,6 +116,10 @@ $app->applyHookBoundTo($this, 'opportunity.blockedFields', [$entity]);
                         <label>
                             <?php i::_e('Tipo do campo') ?><br>
                             <select ng-model="field.fieldType" ng-options="value.slug as value.name disable when value.disabled for value in data.fieldTypes"></select>
+                        </label>
+                        <label>
+                            <?php i::_e('Item do Edital') ?><br>
+                            <textarea ng-model="field.fieldOptions" placeholder="<?php i::esc_attr_e("Item do Edital"); ?>" /></textarea>
                         </label>
                         <?php
                         foreach ($definitions as $def) {
