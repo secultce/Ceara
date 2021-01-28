@@ -30,6 +30,8 @@ $app->applyHookBoundTo($this, 'opportunity.blockedFields', [$entity]);
                 <a class="btn btn-default add" title="" ng-click="editbox.open('editbox-registration-files', $event)" rel='noopener noreferrer'><?php i::_e("Adicionar anexo"); ?></a>
             </p>
         <?php endif; ?>
+
+
         <!-- edit-box to add attachment -->
 
         <edit-box ng-if="data.entity.canUserModifyRegistrationFields" id="editbox-registration-fields" position="right" title="<?php i::esc_attr_e("Adicionar campo"); ?>" cancel-label="<?php i::esc_attr_e("Cancelar"); ?>" submit-label="<?php i::esc_attr_e("Criar"); ?>" close-on-cancel='true' on-cancel="closeNewFieldConfigurationEditBox" on-submit="createFieldConfiguration" spinner-condition="data.fieldSpinner">
@@ -42,12 +44,12 @@ $app->applyHookBoundTo($this, 'opportunity.blockedFields', [$entity]);
                 <textarea ng-model="data.newFieldConfiguration.description" placeholder="<?php i::esc_attr_e("Descrição do campo"); ?>" /></textarea>
             </label>
             <label>
-                <?php i::_e('Tipo do campo') ?><br>
-                <select ng-model="data.newFieldConfiguration.fieldType" ng-options="value.slug as value.name disable when value.disabled for value in data.fieldTypes"></select>
+                <?php i::_e('Descrição do campo') ?><br>
+                <textarea ng-model="data.newFieldConfiguration.fieldOptions" placeholder="<?php i::esc_attr_e("Descrição do campo"); ?>" /></textarea>
             </label>
             <label>
-                <?php i::_e('Item do Edital') ?><br>
-                <textarea ng-model="data.newFieldConfiguration.fieldOptions" placeholder="<?php i::esc_attr_e("Item do Edital"); ?>" /></textarea>
+                <?php i::_e('Tipo do campo') ?><br>
+                <select ng-model="data.newFieldConfiguration.fieldType" ng-options="value.slug as value.name disable when value.disabled for value in data.fieldTypes"></select>
             </label>
             {{ (field = data.newFieldConfiguration) && false ? '' : ''}}
             <?php
@@ -114,12 +116,12 @@ $app->applyHookBoundTo($this, 'opportunity.blockedFields', [$entity]);
                             <textarea ng-model="field.description" placeholder="<?php i::esc_attr_e("Descrição do campo"); ?>" /></textarea>
                         </label>
                         <label>
-                            <?php i::_e('Tipo do campo') ?><br>
-                            <select ng-model="field.fieldType" ng-options="value.slug as value.name disable when value.disabled for value in data.fieldTypes"></select>
+                            <?php i::_e('Item do edital') ?><br>
+                            <textarea ng-model="field.fieldOptions" placeholder="<?php i::esc_attr_e("Item do edital"); ?>" /></textarea>
                         </label>
                         <label>
-                            <?php i::_e('Item do Edital') ?><br>
-                            <textarea ng-model="field.fieldOptions" placeholder="<?php i::esc_attr_e("Item do Edital"); ?>" /></textarea>
+                            <?php i::_e('Tipo do campo') ?><br>
+                            <select ng-model="field.fieldType" ng-options="value.slug as value.name disable when value.disabled for value in data.fieldTypes"></select>
                         </label>
                         <?php
                         foreach ($definitions as $def) {
@@ -167,6 +169,8 @@ $app->applyHookBoundTo($this, 'opportunity.blockedFields', [$entity]);
                             <?php i::_e("Descrição"); ?>: {{field.description}}
                         </span>
                     </div>
+
+
                     <!-- edit-box to edit attachment -->
                     <edit-box ng-if="data.entity.canUserModifyRegistrationFields" id="editbox-registration-files-{{field.id}}" position="left" title="<?php i::esc_attr_e("Editar Anexo"); ?>" cancel-label="<?php i::esc_attr_e("Cancelar"); ?>" submit-label="<?php i::esc_attr_e("Salvar"); ?>" close-on-cancel='true' on-cancel="cancelFileConfigurationEditBox" on-submit="editFileConfiguration" index="{{$index}}" spinner-condition="data.uploadSpinner">
                         <input type="text" ng-model="field.title" placeholder="<?php i::esc_attr_e("Nome do anexo"); ?>" />
@@ -187,6 +191,8 @@ $app->applyHookBoundTo($this, 'opportunity.blockedFields', [$entity]);
                     <p ng-if="!data.entity.canUserModifyRegistrationFields">
                         <a class="file-{{field.template.id}} attachment-template" href="{{field.template.url}}" target="_blank" rel='noopener noreferrer'>{{field.template.name}}</a>
                     </p>
+
+
                     <!-- edit-box to upload attachments -->
                     <edit-box ng-if="data.entity.canUserModifyRegistrationFields" id="editbox-registration-files-template-{{field.id}}" position="top" title="<?php i::esc_attr_e("Enviar modelo"); ?>" cancel-label="<?php i::esc_attr_e("Cancelar"); ?>" submit-label="<?php i::esc_attr_e("Enviar modelo"); ?>" on-submit="sendFile" close-on-cancel='true' spinner-condition="data.uploadSpinner">
                         <p ng-if="field.template">
