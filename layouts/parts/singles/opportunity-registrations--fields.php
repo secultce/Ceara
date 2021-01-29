@@ -44,8 +44,8 @@ $app->applyHookBoundTo($this, 'opportunity.blockedFields', [$entity]);
                 <textarea ng-model="data.newFieldConfiguration.description" placeholder="<?php i::esc_attr_e("Descrição do campo"); ?>" /></textarea>
             </label>
             <label>
-                <?php i::_e('Descrição do campo') ?><br>
-                <textarea ng-model="data.newFieldConfiguration.fieldOptions" placeholder="<?php i::esc_attr_e("Descrição do campo"); ?>" /></textarea>
+                <?php i::_e('Item do edital') ?><br>
+                <textarea ng-model="data.newFieldConfiguration.config" placeholder="<?php i::esc_attr_e("Item do edital"); ?>" /></textarea>
             </label>
             <label>
                 <?php i::_e('Tipo do campo') ?><br>
@@ -117,7 +117,7 @@ $app->applyHookBoundTo($this, 'opportunity.blockedFields', [$entity]);
                         </label>
                         <label>
                             <?php i::_e('Item do edital') ?><br>
-                            <textarea ng-model="field.fieldOptions" placeholder="<?php i::esc_attr_e("Item do edital"); ?>" /></textarea>
+                            <textarea ng-model="field.config" placeholder="<?php i::esc_attr_e("Item do edital"); ?>" /></textarea>
                         </label>
                         <label>
                             <?php i::_e('Tipo do campo') ?><br>
